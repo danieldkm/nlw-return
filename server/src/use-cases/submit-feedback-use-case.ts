@@ -33,14 +33,19 @@ export class SubmitFeedbackUseCase {
       screenshot,
     });
 
+    const body = [
+      `<div style="font-family: sans-serif; font-size: 16px; color: $111;">`,
+      `<p>Tipo do ffedback: ${type}</p>`,
+      `<p>Tipo do ffedback: ${comment}</p>`,
+      screenshot ? `<image src="${screenshot}" alt="Screenshot"/>` : '',
+      `</div>`,
+    ].join('\n');
+    console.log({
+      body
+    });
     await this.mailAdapter.sendMail({
       subject: 'Novo feedback',
-      body: [
-        `<div style="font-family: sans-serif; font-size: 16px; color: $111;">`,
-        `<p>Tipo do ffedback: ${type}</p>`,
-        `<p>Tipo do ffedback: ${comment}</p>`,
-        `</div>`,
-      ].join('\n'),
+      body,
     });
   }
 }
